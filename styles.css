@@ -1,0 +1,305 @@
+:root {
+  --bg-color: #fff;
+  --text-color: #161616;
+  --clock-bg: #fff;
+  --clock-shadow: 0 20px 48px rgb(0 0 0 / 12%), inset 0 0 0 10px rgb(0 0 0 / 7%), inset 0 0 0 12px rgb(255 255 255 / 85%);
+  --minute-ring-border: rgb(0 0 0 / 14%);
+  --tick-color: rgb(0 0 0 / 42%);
+  --tick-major-color: #161616;
+  --numeral-color: #161616;
+  --minute-label-color: #888;
+  --brand-color: #555;
+  --date-bg: #fff;
+  --date-border: #d6d6d6;
+  --hand-color: #161616;
+  --second-color: #bd1717;
+  --control-bg: #fff;
+  --control-border: #d6d6d6;
+  --control-hover: #f4f4f4;
+  --control-text: #555;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+[data-theme="dark"] {
+  --bg-color: #121212;
+  --text-color: #f1f1f1;
+  --clock-bg: #1a1a1a;
+  --clock-shadow: 0 20px 48px rgb(0 0 0 / 48%), inset 0 0 0 10px rgb(255 255 255 / 10%), inset 0 0 0 12px rgb(0 0 0 / 85%);
+  --minute-ring-border: rgb(255 255 255 / 14%);
+  --tick-color: rgb(255 255 255 / 42%);
+  --tick-major-color: #f1f1f1;
+  --numeral-color: #f1f1f1;
+  --minute-label-color: #aaa;
+  --brand-color: #aaa;
+  --date-bg: #1a1a1a;
+  --date-border: #444;
+  --hand-color: #f1f1f1;
+  --second-color: #ff4d4d;
+  --control-bg: #1e1e1e;
+  --control-border: #444;
+  --control-hover: #2a2a2a;
+  --control-text: #ccc;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  background: var(--bg-color);
+  color: var(--text-color);
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+.app {
+  min-height: 100svh;
+  display: grid;
+  place-items: center;
+  padding: 3rem 1.5rem 2.5rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.controls {
+  position: absolute;
+  top: 1.4rem;
+  right: 1.4rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  z-index: 10;
+}
+
+.control-select,
+.control-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: .5rem;
+  padding: .55rem .75rem;
+  border: 1px solid var(--control-border);
+  border-radius: .5rem;
+  background: var(--control-bg);
+  color: var(--control-text);
+  font: inherit;
+  font-size: 13px;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.control-select:hover,
+.control-select:focus-visible,
+.control-btn:hover,
+.control-btn:focus-visible {
+  color: var(--text-color);
+  background: var(--control-hover);
+  outline: none;
+}
+
+.control-btn svg {
+  width: 19px;
+  height: 19px;
+  fill: currentColor;
+}
+
+.control-btn[aria-pressed="true"] {
+  color: var(--text-color);
+}
+
+.clock-shell {
+  width: min(84vw, 680px);
+  aspect-ratio: 1;
+  position: relative;
+}
+
+.clock {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: var(--clock-bg);
+  box-shadow: var(--clock-shadow);
+  transition: background 0.3s ease, box-shadow 0.3s ease;
+}
+
+.minute-ring,
+.ticks,
+.numerals {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+}
+
+.minute-ring {
+  inset: 21px;
+  border: 1px solid var(--minute-ring-border);
+}
+
+.tick {
+  position: absolute;
+  width: 1px;
+  height: 9px;
+  background: var(--tick-color);
+}
+
+.tick.major {
+  width: 3px;
+  height: 23px;
+  background: var(--tick-major-color);
+  border-radius: 3px;
+}
+
+.clock-minute {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  font-size: clamp(9px, 1.8vw, 13px);
+  font-weight: 500;
+  color: var(--minute-label-color);
+  line-height: 1;
+  z-index: 1;
+}
+
+.clock-hour-numeral {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  font-size: clamp(14px, 2.6vw, 22px);
+  font-weight: 600;
+  color: var(--numeral-color);
+  line-height: 1;
+  z-index: 1;
+}
+
+.brand,
+.location {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  margin: 0;
+  text-align: center;
+  color: var(--brand-color);
+}
+
+.brand {
+  top: 29%;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: .2em;
+}
+
+.location {
+  top: 34.5%;
+  font-size: 11px;
+  letter-spacing: .12em;
+}
+
+.date-window {
+  position: absolute;
+  top: 50%;
+  right: 25.5%;
+  transform: translateY(-50%);
+  min-width: 54px;
+  padding: 5px 6px;
+  border: 1px solid var(--date-border);
+  background: var(--date-bg);
+  color: var(--text-color);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .055em;
+  text-align: center;
+  z-index: 1;
+}
+
+.hand {
+  position: absolute;
+  bottom: 50%;
+  left: 50%;
+  transform: translateX(-50%) rotate(0deg);
+  transform-origin: 50% 100%;
+  box-shadow: 0 0 1px var(--bg-color);
+  clip-path: polygon(50% 0%, 100% 12%, 100% 100%, 0% 100%, 0% 12%);
+}
+
+.hour {
+  width: 11px;
+  height: 31%;
+  background: var(--hand-color);
+  z-index: 2;
+}
+
+.minute {
+  width: 7px;
+  height: 38%;
+  background: var(--hand-color);
+  z-index: 2;
+}
+
+.second {
+  z-index: 3;
+  width: 2px;
+  height: 42%;
+  background: var(--second-color);
+  clip-path: none;
+}
+
+.second::after {
+  content: "";
+  position: absolute;
+  bottom: -34px;
+  left: 50%;
+  width: 10px;
+  height: 10px;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  background: var(--second-color);
+}
+
+.pin {
+  position: absolute;
+  z-index: 4;
+  top: 50%;
+  left: 50%;
+  width: 22px;
+  height: 22px;
+  transform: translate(-50%, -50%);
+  border: 5px solid var(--second-color);
+  border-radius: 50%;
+  background: var(--clock-bg);
+  box-shadow: 0 0 0 2px var(--clock-bg);
+}
+
+.digital-time {
+  position: absolute;
+  top: calc(100% + 22px);
+  width: 100%;
+  color: var(--brand-color);
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: .15em;
+  text-align: center;
+}
+
+.developer-credits {
+  position: absolute;
+  bottom: 1rem;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  font-size: 12px;
+  color: var(--brand-color);
+  letter-spacing: 0.05em;
+}
+
+@media (max-width: 500px) {
+  .app {
+    align-items: start;
+    padding-top: 5.3rem;
+  }
+  .clock-shell {
+    width: min(92vw, 440px);
+  }
+  .date-window {
+    right: 22%;
+  }
+}

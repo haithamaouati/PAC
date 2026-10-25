@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="A precision analog clock with customizable formats, timezones, and theme." />
+    <title>Precision Analog Clock</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="app" aria-label="Analog clock application">
+      <div class="controls">
+        <select id="format-select" class="control-select" aria-label="Hour number format">
+          <option value="default">Standard</option>
+          <option value="roman">Roman</option>
+          <option value="arabic">Arabic</option>
+        </select>
+        <select id="timezone-select" class="control-select" aria-label="Time zone">
+          <option value="Africa/Algiers">AST (Algiers)</option>
+          <option value="Asia/Kolkata">IST (Kolkata)</option>
+          <option value="UTC">UTC</option>
+          <option value="America/New_York">EST (New York)</option>
+          <option value="Europe/London">GMT (London)</option>
+          <option value="America/Los_Angeles">PST (Los Angeles)</option>
+          <option value="Asia/Tokyo">JST (Tokyo)</option>
+          <option value="Australia/Sydney">AEDT (Sydney)</option>
+        </select>
+        <button id="theme-toggle" class="control-btn" type="button" aria-label="Toggle dark mode" title="Toggle theme">
+          <svg id="theme-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 1 0 9 9c0-.46-.04-.92-.1-1.36a5.38 5.38 0 0 1-4.4 4.4 5.38 5.38 0 0 1-4.4-4.4A9 9 0 0 1 12 3z"/></svg>
+        </button>
+        <button id="sound-toggle" class="control-btn" type="button" aria-pressed="false" aria-label="Turn tick sound on" title="Tick sound off">
+          <svg id="sound-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 10v4h4l5 4V6l-5 4H3zm12.5 2c0-1.18-.68-2.2-1.67-2.7v5.4A2.99 2.99 0 0 0 15.5 12zm0-7.5v2.06A5.98 5.98 0 0 1 19 12a5.98 5.98 0 0 1-3.5 5.44v2.06A7.99 7.99 0 0 0 21 12a7.99 7.99 0 0 0-5.5-7.5z"/></svg>
+        </button>
+      </div>
+
+      <section class="clock-shell" aria-label="Live analog clock">
+        <div class="clock">
+          <div class="minute-ring"></div>
+          <div class="ticks" aria-hidden="true"></div>
+          <div class="numerals" aria-hidden="true"></div>
+          <p class="brand">PRECISION</p>
+          <p class="location" id="location-label">ALGERIA STANDARD TIME</p>
+          <time class="date-window" id="date-window">SUN 25</time>
+          <div class="hand hour" id="hour-hand"></div>
+          <div class="hand minute" id="minute-hand"></div>
+          <div class="hand second" id="second-hand"></div>
+          <div class="pin" aria-hidden="true"></div>
+        </div>
+        <time class="digital-time" id="digital-time" aria-live="polite">00:00:00 AST</time>
+      </section>
+
+      <footer class="developer-credits">
+        Developed with ♥ by Haitham Aouati
+      </footer>
+    </main>
+    <script src="script.js"></script>
+  </body>
+</html>
